@@ -18,8 +18,10 @@
     for (var i = 0; i < a.length; i++) s += al[a[i] % al.length];
     return s;
   }
-  var client = qs.get('c') || ls.get('six:client') || gid();
-  ls.set('six:client', client);
+  var okId = function (v) { return /^[a-z0-9]{6,20}$/.test(v || '') ? v : ''; };
+  var client = okId(qs.get('c')) || okId(ls.get('six:client')) || (CFG.endpoint ? '' : gid());
+  if (client) ls.set('six:client', client);
+  var locked = false;
   var KEY = function (b) { return 'six:' + (b || BK) + ':' + client; };
 
   var S = { a: {}, cur: 'welcome', t: 0, done: false };
@@ -83,14 +85,17 @@
     if (CFG.endpoint && navigator.sendBeacon && S.t && !S.done) { try { navigator.sendBeacon(CFG.endpoint, new Blob([JSON.stringify(payload('save'))], { type: 'text/plain;charset=utf-8' })); } catch (e) {} }
   });
   function pullRemote() {
-    if (!CFG.endpoint) return Promise.resolve();
+    if (!CFG.endpoint) return Promise.resolve(null);
     var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 4500);
     return fetch(CFG.endpoint + '?action=load&client=' + encodeURIComponent(client) + '&brief=' + BK, { signal: ctl.signal })
       .then(function (r) { return r.json(); })
       .then(function (r) {
         clearTimeout(to);
+        if (r && r.ok && r.valid === false) return false;
+        if (r && r.ok && r.valid && r.name && !nonEmpty(S.a.name) && BK === 'concept') S.a.name = r.name;
         if (r && r.ok && r.data && r.data.answers && (r.data.updatedAt || 0) > (S.t || 0)) { S.a = r.data.answers; S.t = r.data.updatedAt; S.done = !!r.data.done; if (r.data.page && !S.cur) S.cur = r.data.page; }
-      }).catch(function () { clearTimeout(to); });
+        return r && r.ok ? true : null;
+      }).catch(function () { clearTimeout(to); return null; });
   }
 
   /* ---------- допоміжні ---------- */
@@ -448,6 +453,7 @@
 
   /* ---------- клавіатура ---------- */
   document.addEventListener('keydown', function (e) {
+    if (locked) return;
     if (dr.classList.contains('open')) { if (e.key === 'Escape') dr.classList.remove('open'); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     var k = stage.dataset.k || '';
@@ -462,8 +468,16 @@
   });
 
   /* ---------- старт ---------- */
+  function lock(kind) {
+    locked = true; $('#menuBtn').hidden = true; nav.hidden = true; bar.style.width = '0'; status('', '');
+    stage.className = 'stage'; stage.dataset.k = 'lock';
+    stage.innerHTML = '<p class="eyebrow">SIX Studio</p><h1>' + words(kind === 'bad' ? 'Це посилання недійсне' : 'Потрібне особисте посилання') + '</h1><p class="hint">' +
+      (kind === 'bad' ? 'Посилання застаріло або в ньому помилка. Напишіть нам, і ми надішлемо нове.' : 'Бриф відкривається лише за особистим посиланням, яке студія надсилає кожному клієнтові. Якщо ви його ще не отримали, напишіть нам.') + '</p>';
+    document.title = 'SIX Бриф';
+  }
+  if (!client) { lock('none'); return; }
   loadLocal();
-  $('.logo').addEventListener('click', function (e) { e.preventDefault(); go('welcome'); });
+  $('.logo').addEventListener('click', function (e) { e.preventDefault(); if (!locked) go('welcome'); });
   status(CFG.endpoint ? '' : '', '');
-  pullRemote().then(function () { if (S.t) ls.set(KEY(), JSON.stringify({ a: S.a, cur: S.cur, t: S.t, done: S.done })); render(); if (S.t) status(CFG.endpoint ? 'Збережено' : 'Збережено в браузері', 'ok'); });
+  pullRemote().then(function (valid) { if (valid === false) return lock('bad');  if (S.t) ls.set(KEY(), JSON.stringify({ a: S.a, cur: S.cur, t: S.t, done: S.done })); render(); if (S.t) status(CFG.endpoint ? 'Збережено' : 'Збережено в браузері', 'ok'); });
 })();
