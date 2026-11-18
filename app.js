@@ -209,7 +209,7 @@
     return '<div class="hero"><div><p class="eyebrow">' + esc(B.eyebrow) + '</p><h1>' + words(B.title) + '</h1><p class="hint">' + B.welcome + '</p>' +
       '<div class="meta"><span>' + esc(B.time) + '</span><span>Відповіді зберігаються автоматично</span><span>Можна пропускати питання</span></div>' + res +
       '<div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn main" id="start" type="button">' + main + '</button>' + (started ? '<button class="btn ghost" id="reset" type="button">Почати спочатку</button>' : '') + '</div><p class="consent">Натискаючи «' + main + '», ви погоджуєтеся, що ваші відповіді буде використано лише для підготовки дизайн-проєкту. Їх бачить тільки команда SIX Studio, ми нікому їх не передаємо.</p></div>' +
-      '<div class="pic"><img src="img/hero.jpg" alt="" onerror="this.remove()"></div></div>';
+      '</div>';
   }
   function bindWelcome() {
     $('#start').onclick = function () {
@@ -229,7 +229,7 @@
     var s = p.sec;
     return '<div class="sec"><div><div class="no">' + String(p.no).padStart(2, '0') + '</div><p class="eyebrow">' + esc(B.title) + '</p><h1>' + words(s.title) + '</h1><p class="hint">' + s.intro + '</p>' +
       '<div class="meta"><span>' + p.n + ' ' + plural(p.n) + '</span><span>≈ ' + Math.max(1, Math.round(p.n * 0.35)) + ' хв</span></div></div>' +
-      '<div class="pic"><img src="img/sec-' + s.id + '.jpg" alt="" onerror="this.remove()"></div></div>';
+      '</div>';
   }
   function plural(n) { var m = n % 10, h = n % 100; return (m === 1 && h !== 11) ? 'питання' : ((m >= 2 && m <= 4 && (h < 12 || h > 14)) ? 'питання' : 'питань'); }
 

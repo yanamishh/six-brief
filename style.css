@@ -370,3 +370,15 @@ h1{margin-bottom:26px}
 /* небольшой зазор между скруглёнными плашками, чтобы они не стыковались */
 .opts{gap:10px 0}
 .opts.many{row-gap:10px;column-gap:60px}
+
+/* без серых заглушек под фото; приветствие компактнее; плашки не налезают друг на друга */
+.hero,.sec{grid-template-columns:1fr}
+.hero .pic,.sec .pic{display:none}
+.hero h1{font-size:clamp(38px,5.6vw,88px);line-height:.92;letter-spacing:-.012em;margin-bottom:26px;max-width:11ch}
+.hero .hint{font:500 clamp(16px,1.3vw,21px)/1.4 var(--body);color:rgba(45,42,42,.68);max-width:46ch;margin-bottom:28px}
+.hero .eyebrow{font-size:clamp(14px,1.1vw,17px)}
+.meta{gap:10px;margin:0 0 30px}
+.hero .meta span{font:500 clamp(13px,1vw,16px)/1 var(--body);padding:11px 20px}
+.hero .btn.main{padding:22px 52px;font:700 clamp(15px,1.3vw,19px)/1 var(--disp);letter-spacing:.03em}
+.hero .consent{font-size:13px;margin-top:26px}
+.hero .resume{max-width:46ch}
