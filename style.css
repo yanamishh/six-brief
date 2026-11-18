@@ -292,3 +292,20 @@ h1{margin-bottom:26px}
 .opt i{width:44px;font-size:20px;font-weight:500;color:rgba(45,42,42,.78);letter-spacing:0}
 .opt{gap:20px}
 @media(min-width:821px){.opts{max-width:540px}}
+
+/* ---- серые тексты крупнее и плотнее, цифры намного крупнее, красивые круглые отметки вместо квадратов ---- */
+.eyebrow,.qv .eyebrow{font:500 clamp(15px,1.25vw,19px)/1.15 var(--disp);letter-spacing:.02em;color:rgba(45,42,42,.72)}
+.hint{font:500 clamp(16px,1.35vw,20px)/1.35 var(--body);color:rgba(45,42,42,.74);letter-spacing:.01em}
+.rep h3{font:700 clamp(16px,1.35vw,19px)/1 var(--disp);letter-spacing:.02em}
+.rep label{font:500 clamp(15px,1.2vw,18px)/1.15 var(--body);color:rgba(45,42,42,.74);letter-spacing:.02em;margin-top:22px}
+.rep .inp{font:500 clamp(19px,1.6vw,23px)/1.2 var(--body);padding:8px 0 14px}
+.rep .rm{font:500 15px var(--body)}
+.add{font:700 clamp(16px,1.3vw,19px)/1 var(--disp);letter-spacing:.03em;padding:22px 44px;min-width:300px}
+.scale-lbl{font:500 clamp(13px,1vw,15px) var(--body);color:rgba(45,42,42,.74)}
+.opt i{width:clamp(40px,4vw,64px);font:500 clamp(24px,2.3vw,34px)/1 var(--disp);color:rgba(45,42,42,.82);letter-spacing:-.02em}
+.opt{padding-top:24px;padding-bottom:24px;gap:22px}
+.opt:after,.multi .opt:after{content:"";right:2px;width:28px;height:28px;margin-top:-14px;border:1.5px solid rgba(45,42,42,.55);border-radius:50%;background:transparent no-repeat center/15px;transition:background-color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+.opt:hover:after{border-color:var(--ink);transform:scale(1.08)}
+.opt.on:after{border-color:var(--ink);background-color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F1EFEF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
+.single .opt.on:after{background-image:none;box-shadow:inset 0 0 0 6px var(--bg)}
+@media(min-width:821px){.opts{max-width:600px}}
