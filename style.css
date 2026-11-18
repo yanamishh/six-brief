@@ -344,9 +344,9 @@ h1{margin-bottom:26px}
 .opts{margin-inline:0}
 @media(min-width:821px){
   .opts{--row:calc((100svh - 372px)/var(--n,6))}
-  .opt{padding-top:min(24px,max(6px,calc((var(--row) - 36px)/2)));padding-bottom:min(24px,max(6px,calc((var(--row) - 36px)/2)))}
+  .opt{padding-top:min(24px,max(6px,calc((var(--row) - 46px)/2)));padding-bottom:min(24px,max(6px,calc((var(--row) - 46px)/2)))}
   .opt i{font-size:clamp(18px,calc(var(--row)*.52),34px)}
-  .opt{min-height:max(42px,min(88px,var(--row)))}
+  .opt{min-height:max(40px,min(88px,calc(var(--row) - 10px)))}
 }
 @media(max-width:820px){.opt{margin-left:0;margin-right:0;width:100%;padding-left:14px;padding-right:56px}.opt:after,.multi .opt:after{right:14px}}
 
@@ -357,7 +357,7 @@ h1{margin-bottom:26px}
   .opts.many{display:grid;grid-auto-flow:column;grid-template-rows:repeat(var(--r),auto);grid-template-columns:1fr 1fr;column-gap:56px;border-top:0;max-width:none;--row:calc((100svh - 372px)/var(--r))}
   .opts.many .opt{border-bottom:0;border-top:var(--hair) solid var(--line)}
   .opts.many .opt:hover{border-top-color:transparent}
-  .opts.many .opt:nth-child(n){min-height:max(48px,min(96px,var(--row)))}
+  .opts.many .opt:nth-child(n){min-height:max(46px,min(92px,calc(var(--row) - 10px)))}
 }
 
 /* линии между вариантами рисуем отдельно, чтобы скруглённая плашка не гнула их по краям */
@@ -366,3 +366,7 @@ h1{margin-bottom:26px}
 .opts.many .opt:before{bottom:auto;top:0}
 .opt:hover:before,.opts:not(.many) .opt:hover + .opt:before{opacity:0}
 @media(max-width:820px){.opt:before{left:14px;right:14px}}
+
+/* небольшой зазор между скруглёнными плашками, чтобы они не стыковались */
+.opts{gap:10px 0}
+.opts.many{row-gap:10px;column-gap:60px}
