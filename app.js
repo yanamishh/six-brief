@@ -42,7 +42,25 @@
     if (typeof v === 'object') return Object.keys(v).some(function (k) { return nonEmpty(v[k]); });
     return true;
   }
-  var vis = function (q) { return (!q.show || q.show(S.a)) && (!q.items || typeof q.items !== 'function' || q.items(S.a).length > 0); };
+  function ruleOk(r) {
+    var v = S.a[r.q], is = function (x) { return Array.isArray(v) ? v.indexOf(x) > -1 : v === x; };
+    if (r.op === 'is') return is(r.v);
+    if (r.op === 'isNot') return !is(r.v);
+    if (r.op === 'filled') return nonEmpty(v);
+    if (r.op === 'empty') return !nonEmpty(v);
+    return true;
+  }
+  function showOk(q) {
+    var sr = q.showRules;
+    if (sr && sr.rules && sr.rules.length) return sr.mode === 'any' ? sr.rules.some(ruleOk) : sr.rules.every(ruleOk);
+    return !q.show || q.show(S.a);
+  }
+  var FROM_TYPES = ['rate', 'multitext', 'matrix'];
+  var vis = function (q) {
+    if (!showOk(q)) return false;
+    if (q.itemsFrom && FROM_TYPES.indexOf(q.type) > -1 && !(Array.isArray(S.a[q.itemsFrom]) && S.a[q.itemsFrom].length)) return false;
+    return !q.items || typeof q.items !== 'function' || q.items(S.a).length > 0;
+  };
   function pages() {
     var P = [{ k: 'welcome' }];
     B.sections.forEach(function (s, si) {
@@ -100,10 +118,10 @@
 
   /* ---------- допоміжні ---------- */
   function optsOf(q) {
-    var raw = typeof q.opts === 'function' ? q.opts(S.a) : (q.opts || []);
-    return raw.map(function (o, i) { return typeof o === 'string' ? { v: o, l: o, i: i } : { v: o.v || o.l, l: o.l, d: o.d, i: i }; });
+    var raw = q.optsFrom ? (Array.isArray(S.a[q.optsFrom]) ? S.a[q.optsFrom] : []) : (typeof q.opts === 'function' ? q.opts(S.a) : (q.opts || []));
+    return raw.map(function (o, i) { return typeof o === 'string' ? { v: o, l: o, i: i } : { v: o.v || o.l, l: o.l, d: o.d, i: i, img: o.img, fit: o.fit }; });
   }
-  function itemsOf(q) { var r = typeof q.items === 'function' ? q.items(S.a) : (q.items || []); return r.map(function (o) { return typeof o === 'string' ? { id: o, l: o } : o; }); }
+  function itemsOf(q) { var r = (q.itemsFrom && FROM_TYPES.indexOf(q.type) > -1) ? (Array.isArray(S.a[q.itemsFrom]) ? S.a[q.itemsFrom] : []) : (typeof q.items === 'function' ? q.items(S.a) : (q.items || [])); return r.map(function (o) { return typeof o === 'string' ? { id: o, l: o } : o; }); }
   var TRUST = '_trust', OTHER = '_other';
   function labelOf(q, v) {
     if (v === TRUST) return 'Не знаю / довіряю дизайнеру';
@@ -135,6 +153,7 @@
   /* ---------- розмітка ---------- */
   var ICON = '<svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 3-3 6 6M3 5h18v14H3z"/></svg>';
   var CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke-dasharray="24" stroke-dashoffset="0"/></svg>';
+  function fitAttr(f) { if (!f) return ''; var x = f.x == null ? 50 : f.x, y = f.y == null ? 50 : f.y, z = f.z || 1; return ' style="object-position:' + x + '% ' + y + '%;transform-origin:' + x + '% ' + y + '%;transform:scale(' + z + ')"'; }
   function imgSrc(q, o) { return o.img || ('img/' + q.id + '/' + (o.i + 1) + '.jpg'); }
   function words(t) { return esc(t).split(' ').map(function (w, i) { return '<span class="w" style="--i:' + i + '">' + w + '</span>'; }).join(' '); }
 
@@ -255,7 +274,7 @@
         var cn = os.length, cc = cn <= 4 ? cn : (cn <= 6 ? 3 : (cn <= 8 ? 4 : (cn <= 10 ? 5 : 6)));
         h = '<div class="cards' + (q.swatch ? ' sw' : '') + '" data-multi="' + (multi ? 1 : 0) + '" style="--cols:' + cc + ';--rows:' + Math.ceil(cn / cc) + '">';
         os.forEach(function (o, i) {
-          h += '<button type="button" class="card' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><div class="ph">' + (o.v === OTHER ? ICON : ICON + '<img src="' + esc(imgSrc(q, o)) + '" alt="" loading="lazy" onerror="this.remove()">') + '</div><div class="tx"><b>' + esc(o.l) + '</b>' + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</div><span class="ck">' + CHECK + '</span></button>';
+          h += '<button type="button" class="card' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><div class="ph">' + (o.v === OTHER ? ICON : ICON + '<img src="' + esc(imgSrc(q, o)) + '" alt="" loading="lazy"' + fitAttr(o.fit) + ' onerror="this.remove()">') + '</div><div class="tx"><b>' + esc(o.l) + '</b>' + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</div><span class="ck">' + CHECK + '</span></button>';
         });
         h += '</div>';
       } else {
