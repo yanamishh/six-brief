@@ -466,3 +466,15 @@ h1{margin-bottom:26px}
   .qv.wide .card .ph{height:max(100px,calc((100svh - 565px)/var(--rows,2)))}
   .qv.wide .cards.sw .ph{height:max(80px,calc((100svh - 545px)/var(--rows,2)))}
 }
+
+/* две колонки: текст и цифры крупнее, как в одной колонке */
+@media(min-width:821px){
+  .opts.many .opt{font-size:clamp(16px,1.5vw,23px);padding-left:26px;padding-right:66px}
+  .opts.many .opt i{font-size:clamp(24px,min(calc(var(--row,70px)*.46),2.3vw),34px);width:clamp(40px,3.4vw,58px)}
+  .opts.many .opt:after{right:22px}
+}
+
+@media(min-width:821px){
+  .opts.many .opt{font-size:clamp(15px,1.3vw,19px)}
+  .opts.many .opt i{font-size:clamp(22px,min(calc(var(--row,70px)*.42),2vw),30px)}
+}
