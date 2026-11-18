@@ -1,0 +1,280 @@
+<title>Макеты брифа SIX</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+/* Показ шести макетов одного экрана брифа. Сами макеты это картины со своими цветами и не меняются от темы; рамка страницы следует теме. */
+:root{--bg:#EEE9E1;--ink:#171512;--mut:#7A7367;--line:rgba(23,21,18,.16)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12100E;--ink:#EEE8DD;--mut:#9A9384;--line:rgba(255,255,255,.14);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12100E;--ink:#EEE8DD;--mut:#9A9384;--line:rgba(255,255,255,.14);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.5 'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.page{max-width:1500px;margin:0 auto;padding-block:40px 80px}
+.page h1{margin:0;font:600 clamp(38px,8.2vw,146px)/.88 'Montserrat',sans-serif;letter-spacing:-.055em;text-transform:uppercase;text-wrap:balance}
+.lead{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px 48px;margin:30px 0 60px;align-items:start}
+.lead p{margin:0;color:var(--mut);font-size:13.5px;line-height:1.65;max-width:560px}
+.lead p b{color:var(--ink);font-weight:600}
+.rules{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rules li{border-top:1px solid var(--line);padding-top:10px;font-size:13px;display:grid;grid-template-columns:34px 1fr;gap:8px}
+.rules li span{font:600 12px 'Montserrat',sans-serif;color:var(--mut)}
+@media(max-width:820px){.lead{grid-template-columns:1fr}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:64px 36px;justify-items:center}
+.card{width:360px;max-width:100%;margin:0}
+.cap{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-top:22px;align-items:baseline}
+.cap .n{font:600 40px/1 'Montserrat',sans-serif;letter-spacing:-.05em;grid-row:span 2}
+.cap h2{margin:0;font:600 18px/1.2 'Montserrat',sans-serif;letter-spacing:-.03em}
+.cap p{margin:0;color:var(--mut);font-size:12.5px;line-height:1.55}
+.cap dl{grid-column:1/-1;margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12px}
+.cap dt{color:var(--mut)}.cap dd{margin:0}
+.note{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--mut);font-size:13px;max-width:680px}
+
+/* ---------- общее для макетов ---------- */
+.art{position:relative;width:360px;max-width:100%;height:740px;border-radius:40px;overflow:hidden;isolation:isolate;box-shadow:0 40px 80px -40px rgba(30,15,5,.6)}
+.art .bg,.art .mat{position:absolute;inset:0;z-index:0}
+.art .grain{position:absolute;inset:0;z-index:4;pointer-events:none;mix-blend-mode:overlay;opacity:.55;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.art .ui{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:30px 26px 26px}
+.art h3{margin:0;font:600 38px/.98 'Montserrat',sans-serif;letter-spacing:-.055em;text-wrap:balance}
+.art .hint{margin:12px 0 0;font-size:12.5px;line-height:1.5}
+.art .tag{display:inline-flex;border-radius:999px;padding:5px 13px;font:500 10px 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.art .nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;font-size:13px}
+.art .go{display:inline-flex;align-items:center;gap:14px;border-radius:999px;font-weight:600;padding:6px 6px 6px 22px}
+.art .go i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center}
+.art .go i:after{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 6l6 6-6 6'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14M13 6l6 6-6 6'/></svg>") center/contain no-repeat}
+
+/* образцы материалов: каждый вариант ответа это материал */
+.sw{position:relative;overflow:hidden;background:#C9B7A0}
+.sw:before{content:"";position:absolute;inset:0}
+.sw:after{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 25% 15%,rgba(255,244,220,.5),rgba(255,244,220,0) 65%);mix-blend-mode:soft-light}
+.sw.paint{background:linear-gradient(160deg,#D4C2AB,#B8A58D)}
+.sw.wall:before{background:repeating-linear-gradient(90deg,#D9CCB7 0 3px,#CBBDA5 3px 6px),radial-gradient(circle,rgba(120,100,70,.18) 1px,transparent 1.5px) 0 0/8px 8px;background-blend-mode:multiply}
+.sw.plaster:before{filter:url(#fx-plasterL)}
+.sw.wood:before{background:repeating-linear-gradient(90deg,#8A5C3A 0 9px,#4E3120 9px 11px),repeating-linear-gradient(0deg,rgba(255,200,140,.12) 0 1px,transparent 1px 5px);background-blend-mode:overlay}
+.sw.stone:before{filter:url(#fx-marble)}
+.on .sw{box-shadow:0 0 0 2px var(--sel,#FFB05C),0 0 26px 2px var(--selg,rgba(255,160,70,.65))}
+
+/* ---------- 1. Рифлёное стекло ---------- */
+.v1{background:#140D08;color:#FBEBD6}
+.v1 .bg{background:radial-gradient(56% 26% at 70% 38%,#FFC476 0%,rgba(255,196,118,0) 72%),radial-gradient(70% 34% at 20% 78%,#D8671E 0%,rgba(216,103,30,0) 72%),radial-gradient(50% 24% at 90% 92%,#7A3414 0%,rgba(122,52,20,0) 72%);filter:blur(10px)}
+.v1 .flute{position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.08) 35%,rgba(255,226,180,.3) 68%,rgba(0,0,0,.55)) 0 0/13px 100%}
+.v1 .flute:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,13,8,.55),rgba(20,13,8,0) 30%,rgba(20,13,8,0) 62%,rgba(20,13,8,.6))}
+.v1 .tag{border:1px solid rgba(255,235,205,.55);color:#FBEBD6;background:rgba(20,13,8,.35);backdrop-filter:blur(8px)}
+.v1 .hint{color:rgba(251,235,214,.85)}
+.v1 .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.v1 .opt{display:flex;flex-direction:column;gap:8px;font-size:10.5px;font-weight:600;line-height:1.2;text-align:center}
+.v1 .opt .sw{aspect-ratio:1/1.35;border-radius:999px 999px 14px 14px;border:1px solid rgba(255,235,205,.4)}
+.v1 .opt span{text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.v1 .go{background:linear-gradient(120deg,#FFE3B5,#FF9340 70%,#E9561F);color:#2A1307;box-shadow:0 14px 34px -10px rgba(255,138,61,.9)}
+.v1 .go i{background:#1A0E08;color:#FFD7A6}
+.v1 .nav span{color:rgba(251,235,214,.85)}
+
+/* ---------- 2. Терракота ---------- */
+.v2{background:#A5441E;color:#FBEBDD}
+.v2 .mat{filter:url(#fx-terra)}
+.v2 .mat:after{content:"";position:absolute;inset:0;background:radial-gradient(70% 40% at 30% 30%,rgba(255,170,100,.4),rgba(255,170,100,0) 70%),linear-gradient(180deg,rgba(60,15,5,.35),rgba(60,15,5,0) 25%,rgba(60,15,5,0) 70%,rgba(60,15,5,.4))}
+.v2 .caps{font:500 9.5px/1.5 'Montserrat',sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.v2 .top{text-align:center}
+.v2 h3{font:500 46px/.95 'Cormorant Garamond',serif;letter-spacing:-.02em;margin-top:60px}
+.v2 .hint{font:500 9.5px/1.5 'Montserrat',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,235,221,.8)}
+.v2 .opts{display:flex;flex-direction:column;gap:2px;margin-left:92px}
+.v2 .opt{display:flex;align-items:center;gap:12px;padding:9px 0;font:500 10.5px/1.3 'Montserrat',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,235,221,.72)}
+.v2 .opt .sw{width:16px;height:16px;border-radius:50%;flex:none;border:1px solid rgba(251,235,221,.7)}
+.v2 .opt.on{color:#FFF6EA}
+.v2 .opt.on .sw{box-shadow:0 0 0 3px rgba(251,235,221,.3)}
+.v2 .opt.on span{border-bottom:1px solid #FFF6EA;padding-bottom:2px}
+.v2 .go{border:1px solid rgba(251,235,221,.75);padding:11px 22px;font:500 10.5px 'Montserrat',sans-serif;letter-spacing:.14em;text-transform:uppercase;width:100%;justify-content:space-between}
+.v2 .go i{width:auto;height:auto}
+.v2 .foot{margin-top:16px;display:flex;justify-content:space-between}
+
+/* ---------- 3. Бронзовая фольга ---------- */
+.v3{background:#0B0603;color:#FFE9C8}
+.v3 .mat{filter:url(#fx-foil)}
+.v3 .shade{position:absolute;inset:0;z-index:1;background:radial-gradient(90% 55% at 55% 50%,rgba(0,0,0,0) 30%,rgba(8,4,1,.75) 100%),linear-gradient(180deg,rgba(8,4,1,.85),rgba(8,4,1,0) 32%,rgba(8,4,1,0) 70%,rgba(8,4,1,.75))}
+.v3 .tag{border:1px solid rgba(255,215,160,.6);color:#FFD9A0;background:rgba(10,5,2,.4);backdrop-filter:blur(8px)}
+.v3 h3{color:#FFE2B4;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.v3 .hint{color:rgba(255,226,180,.8)}
+.v3 .opts{display:flex;flex-direction:column;gap:8px}
+.v3 .opt{display:flex;align-items:center;gap:14px;padding:7px 18px 7px 7px;border-radius:999px;background:rgba(14,8,3,.55);backdrop-filter:blur(12px);border:1px solid rgba(255,208,140,.28);font-weight:600;font-size:13.5px}
+.v3 .opt .sw{width:38px;height:38px;border-radius:50%;flex:none}
+.v3 .opt.on{background:rgba(60,30,8,.6);border-color:#FFC070;box-shadow:0 0 30px -4px rgba(255,170,70,.65)}
+.v3 .go{background:linear-gradient(120deg,#FFF0D0,#FFB454 60%,#D9791C);color:#2A1307;box-shadow:0 0 40px rgba(255,170,70,.55)}
+.v3 .go i{background:#1A0E08;color:#FFD7A6}
+.v3 .nav span{color:rgba(255,226,180,.8)}
+
+/* ---------- 4. Капа и торшер ---------- */
+.v4{background:#1B0E08;color:#FBE7CB}
+.v4 .mat{filter:url(#fx-burl)}
+.v4 .light{position:absolute;inset:0;z-index:1;background:radial-gradient(70% 42% at 88% 96%,rgba(255,176,84,.85) 0%,rgba(255,150,60,.35) 38%,rgba(255,150,60,0) 72%),linear-gradient(180deg,rgba(12,5,2,.72),rgba(12,5,2,.15) 40%,rgba(12,5,2,.1) 70%,rgba(12,5,2,.35));mix-blend-mode:normal}
+.v4 .tag{border:1px solid rgba(251,231,203,.5);color:#FBE7CB;background:rgba(15,7,3,.4);backdrop-filter:blur(8px)}
+.v4 .hint{color:rgba(251,231,203,.8)}
+.v4 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v4 .opt{display:flex;flex-direction:column;gap:7px;font-weight:600;font-size:12px}
+.v4 .opt .sw{aspect-ratio:1.55/1;border-radius:20px;border:1px solid rgba(251,231,203,.3)}
+.v4 .opt:last-child{grid-column:1/-1}
+.v4 .opt:last-child .sw{aspect-ratio:3.4/1}
+.v4 .opt span{text-shadow:0 1px 8px rgba(0,0,0,.8);padding-left:4px}
+.v4 .go{background:linear-gradient(120deg,#FFE7BF,#FFA64F);color:#34170A;box-shadow:0 0 40px rgba(255,170,90,.6)}
+.v4 .go i{background:#34170A;color:#FFE6C0}
+.v4 .nav span{color:rgba(251,231,203,.85)}
+
+/* ---------- 5. Солнце на бумаге ---------- */
+.v5{background:#F2ECE0;color:#1B1511}
+.v5 .bg{background:radial-gradient(circle at 50% 50%,transparent 0,transparent 0)}
+.v5 .orb{position:absolute;z-index:1;left:50%;top:210px;width:300px;height:300px;margin-left:-150px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#C4300F 0%,#E0561A 30%,#F2931F 62%,#F8C24A 90%);filter:blur(7px);box-shadow:0 0 90px 20px rgba(240,120,30,.3)}
+.v5 .orb:after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 4px);mix-blend-mode:overlay}
+.v5 .tag{border:1px solid #1B1511;color:#1B1511}
+.v5 .hint{color:rgba(27,21,17,.65)}
+.v5 .opts{display:flex;flex-direction:column;gap:7px}
+.v5 .opt{display:flex;align-items:center;gap:12px;padding:6px 18px 6px 6px;border-radius:999px;background:rgba(255,252,245,.55);backdrop-filter:blur(8px);border:1px solid rgba(27,21,17,.7);font-weight:600;font-size:13px}
+.v5 .opt .sw{width:30px;height:30px;border-radius:50%;flex:none}
+.v5 .opt.on{background:linear-gradient(120deg,#FFD9A0,#F0801F);border-color:transparent;color:#2A1307;box-shadow:0 12px 28px -10px rgba(224,86,26,.7)}
+.v5{--sel:#2A1307;--selg:rgba(0,0,0,0)}
+.v5 .go{background:#1B1511;color:#FBEBD6}
+.v5 .go i{background:linear-gradient(135deg,#FFC070,#E0561A);color:#1B1511}
+.v5 .nav span{color:rgba(27,21,17,.7)}
+
+/* ---------- 6. Прожектор ---------- */
+.v6{background:#0A0705;color:#F6E9D6}
+.v6 .cone{position:absolute;z-index:1;left:50%;top:0;width:340px;height:520px;margin-left:-170px;clip-path:polygon(34% 0,66% 0,100% 100%,0 100%);background:linear-gradient(180deg,rgba(255,225,185,.5),rgba(255,200,140,.12) 80%,rgba(255,200,140,0));filter:blur(14px)}
+.v6 .pool{position:absolute;z-index:1;left:50%;bottom:150px;width:380px;height:110px;margin-left:-190px;border-radius:50%;background:radial-gradient(ellipse at 50% 50%,rgba(255,206,140,.8) 0%,rgba(255,170,90,.35) 48%,rgba(255,170,90,0) 72%);filter:blur(4px)}
+.v6 .slab{position:absolute;z-index:2;left:50%;bottom:196px;width:150px;height:78px;margin-left:-75px;border-radius:12px 12px 6px 6px;box-shadow:0 30px 30px -10px rgba(0,0,0,.7),0 0 60px rgba(255,190,110,.4)}
+.v6 .slab:before{border-radius:inherit}
+.v6 .corners{display:flex;justify-content:space-between;font:500 12.5px/1.3 'Inter',sans-serif}
+.v6 .corners i{display:block;font:italic 500 16px/1.1 'Cormorant Garamond',serif;color:rgba(246,233,214,.8)}
+.v6 .corners div:last-child{text-align:right}
+.v6 h3{text-align:center;font:500 34px/1.02 'Montserrat',sans-serif;letter-spacing:-.045em;margin-top:34px}
+.v6 .hint{text-align:center;color:rgba(246,233,214,.65)}
+.v6 .compos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 12px;font-size:12.5px;line-height:1.25;text-align:left}
+.v6 .compos i{grid-column:1/-1;font:italic 500 16px/1 'Cormorant Garamond',serif;color:rgba(246,233,214,.8)}
+.v6 .compos span{color:rgba(246,233,214,.55)}
+.v6 .compos span.on{color:#FFD9A6}
+.v6 .compos span.on:before{content:"● ";color:#FFAA55;font-size:9px}
+.v6 .go{background:linear-gradient(120deg,#FFEBCB,#FFAC52);color:#2A1307;box-shadow:0 0 36px rgba(255,170,80,.5)}
+.v6 .go i{background:#1A0E08;color:#FFD7A6}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="fx-terra" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".011 .005" numOctaves="5" seed="4"/>
+    <feColorMatrix values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1"/>
+    <feComponentTransfer><feFuncR type="table" tableValues=".40 .60 .86"/><feFuncG type="table" tableValues=".13 .25 .42"/><feFuncB type="table" tableValues=".04 .11 .2"/></feComponentTransfer>
+  </filter>
+  <filter id="fx-foil" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".007 .012" numOctaves="4" seed="11" result="n"/>
+    <feDiffuseLighting in="n" surfaceScale="18" diffuseConstant="1.1" lighting-color="#ffa447" result="d"><feDistantLight azimuth="215" elevation="38"/></feDiffuseLighting>
+    <feSpecularLighting in="n" surfaceScale="18" specularConstant="1" specularExponent="24" lighting-color="#ffe2b0" result="s"><feDistantLight azimuth="215" elevation="38"/></feSpecularLighting>
+    <feComposite in="d" in2="s" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0"/>
+  </filter>
+  <filter id="fx-burl" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".013 .019" numOctaves="5" seed="3"/>
+    <feColorMatrix values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1"/>
+    <feComponentTransfer><feFuncR type="table" tableValues=".07 .2 .1 .3 .13 .4 .18 .5"/><feFuncG type="table" tableValues=".03 .08 .04 .12 .06 .17 .08 .22"/><feFuncB type="table" tableValues=".02 .04 .03 .06 .03 .08 .04 .1"/></feComponentTransfer>
+  </filter>
+  <filter id="fx-plasterL" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="4" seed="9"/>
+    <feColorMatrix values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1"/>
+    <feComponentTransfer><feFuncR type="table" tableValues=".72 .84 .94"/><feFuncG type="table" tableValues=".64 .76 .87"/><feFuncB type="table" tableValues=".52 .64 .76"/></feComponentTransfer>
+  </filter>
+  <filter id="fx-marble" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="turbulence" baseFrequency=".012 .04" numOctaves="4" seed="8"/>
+    <feColorMatrix values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1"/>
+    <feComponentTransfer><feFuncR type="table" tableValues=".36 .8 .93 .95"/><feFuncG type="table" tableValues=".33 .78 .91 .93"/><feFuncB type="table" tableValues=".3 .74 .88 .9"/></feComponentTransfer>
+  </filter>
+</defs></svg>
+
+<div class="page">
+  <h1>Материал в свете</h1>
+  <div class="lead">
+    <p><b>Идея.</b> Бриф как шоурум материалов при тёплом свете. У каждого ответа есть свой материал: краска, обои, штукатурка, дерево, камень, стекло, бронза. Когда клиент выбирает «декоративную штукатурку», экран на секунду становится этой штукатуркой, подсвеченной лампой. Клиент не заполняет форму, а перебирает образцы под светом, и это запоминается. Так студии не делают.</p>
+    <ul class="rules">
+      <li><span>01</span>Свет один: тёплый, янтарный, как от торшера. Он везде в разном виде.</li>
+      <li><span>02</span>Материал настоящий: фактура с зерном, рифление, штукатурка, капа, а не плоская заливка.</li>
+      <li><span>03</span>Заголовки крупные, текст спокойный. Всё, что не материал и не свет, остаётся тихим.</li>
+      <li><span>04</span>Выбранный ответ «включается»: подсветка, свечение, градиентная кнопка.</li>
+    </ul>
+  </div>
+
+  <div class="grid">
+
+    <figure class="card">
+      <div class="art v1"><div class="bg"></div><div class="flute"></div><div class="grain"></div>
+        <div class="ui">
+          <div><span class="tag">Концепція та атмосфера · 5/25</span><h3>Стіни: що більше подобається?</h3><p class="hint">Можна кілька.</p></div>
+          <div><div class="opts" data-v="1"></div><div class="nav"><span>Пропустити</span><b class="go">Далі<i></i></b></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">1</span><h2>Рифлёное стекло</h2><p>Тёплый свет за дымчатым рифлёным стеклом. Образцы материалов стоят арками.</p>
+        <dl><dt>Материал</dt><dd>рифлёное стекло с янтарным светом за ним</dd><dt>Градиенты</dt><dd>золото, медь, коричневый, всё размыто</dd><dt>Кнопка</dt><dd>светящаяся, от кремового к оранжевому</dd></dl></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="art v2"><div class="mat"></div><div class="grain"></div>
+        <div class="ui">
+          <div class="top caps">Концепція та атмосфера</div>
+          <div><h3>Стіни: що більше подобається?</h3><p class="hint" style="margin-top:20px">Можна кілька</p></div>
+          <div><div class="opts" data-v="2"></div><div class="nav" style="flex-direction:column;align-items:stretch;gap:0"><b class="go">Далі<i></i></b><div class="foot caps"><span>Пропустити</span><span>05 / 25</span></div></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">2</span><h2>Терракота</h2><p>Покрашенная штукатурка цвета обожжённой глины, как на афише сауны. Серьёзно и тихо, как галерея.</p>
+        <dl><dt>Материал</dt><dd>терракотовая штукатурка с мазками</dd><dt>Градиенты</dt><dd>свет в углу, тёмные края</dd><dt>Шрифт</dt><dd>Cormorant для вопроса, широкие капсы для подписей</dd></dl></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="art v3"><div class="mat"></div><div class="shade"></div><div class="grain"></div>
+        <div class="ui">
+          <div><span class="tag">Концепція та атмосфера · 5/25</span><h3>Стіни: що більше подобається?</h3><p class="hint">Можна кілька.</p></div>
+          <div><div class="opts" data-v="3"></div><div class="nav"><span>Пропустити</span><b class="go">Далі<i></i></b></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">3</span><h2>Бронза</h2><p>Смятая бронзовая фольга ловит свет. Самый дорогой и яркий вариант, как витрина бутика.</p>
+        <dl><dt>Материал</dt><dd>бронзовая фольга со световыми бликами</dd><dt>Градиенты</dt><dd>от чёрного к золотому</dd><dt>Кнопка</dt><dd>золото со свечением</dd></dl></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="art v4"><div class="mat"></div><div class="light"></div><div class="grain"></div>
+        <div class="ui">
+          <div><span class="tag">Концепція та атмосфера · 5/25</span><h3>Стіни: що більше подобається?</h3><p class="hint">Можна кілька.</p></div>
+          <div><div class="opts" data-v="4"></div><div class="nav"><span>Пропустити</span><b class="go">Далі<i></i></b></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">4</span><h2>Капа и торшер</h2><p>Тёмная капа ореха и пятно света от лампы в углу. Образцы лежат плитками, как на столе в шоуруме.</p>
+        <dl><dt>Материал</dt><dd>корневая древесина (капа)</dd><dt>Градиенты</dt><dd>тёплое пятно в правом нижнем углу</dd><dt>Кнопка</dt><dd>мёд, светится</dd></dl></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="art v5"><div class="bg"></div><div class="orb"></div><div class="grain"></div>
+        <div class="ui">
+          <div><span class="tag">Концепція та атмосфера · 5/25</span><h3>Стіни: що більше подобається?</h3><p class="hint">Можна кілька.</p></div>
+          <div><div class="opts" data-v="5"></div><div class="nav"><span>Пропустити</span><b class="go">Далі<i></i></b></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">5</span><h2>Солнце на бумаге</h2><p>Светлый вариант: тёплая бумага и огненный шар. Самый воздушный, для тех, кто боится тёмных экранов.</p>
+        <dl><dt>Материал</dt><dd>бумага с зерном, у каждого ответа круглый образец</dd><dt>Градиенты</dt><dd>красный, оранжевый, жёлтый шар с линиями</dd><dt>Кнопка</dt><dd>выбранный ответ заливается огнём</dd></dl></figcaption>
+    </figure>
+
+    <figure class="card">
+      <div class="art v6"><div class="bg"></div><div class="cone"></div><div class="pool"></div><div class="slab sw plaster"></div><div class="grain"></div>
+        <div class="ui">
+          <div><div class="corners"><div><i>Розділ</i>Концепція</div><div><i>Питання</i>05 / 25</div></div>
+            <h3>Стіни: що більше подобається?</h3><p class="hint">Можна кілька.</p></div>
+          <div><div class="compos" data-v="6"></div><div class="nav"><span>Пропустити</span><b class="go">Далі<i></i></b></div></div>
+        </div></div>
+      <figcaption class="cap"><span class="n">6</span><h2>Прожектор</h2><p>Тёмная сцена, луч света, и выбранный материал лежит в световом пятне как экспонат. Меняешь ответ, меняется экспонат.</p>
+        <dl><dt>Материал</dt><dd>выбранный образец крупно, на сцене</dd><dt>Градиенты</dt><dd>луч сверху и тёплое пятно на полу</dd><dt>Шрифт</dt><dd>курсивные подписи по углам, как на афишах</dd></dl></figcaption>
+    </figure>
+
+  </div>
+  <p class="note">Все шесть показывают реальный вопрос из брифа: «Стіни: що більше подобається?», раздел «Концепція та атмосфера». Образцы материалов нарисованы кодом. В готовой форме вместо них можно поставить ваши фотографии материалов.</p>
+</div>
+
+<script>
+(function () {
+  var O = [['Фарба', 'paint', 0], ['Шпалери', 'wall', 0], ['Декоративна штукатурка', 'plaster', 1], ['Дерево, панелі', 'wood', 1], ['Камінь, цегла', 'stone', 0]];
+  document.querySelectorAll('[data-v]').forEach(function (box) {
+    var v = box.getAttribute('data-v'), h = '';
+    O.forEach(function (o) {
+      var on = o[2] ? ' on' : '';
+      if (v === '6') h += '<span class="' + (o[2] ? 'on' : '') + '">' + o[0] + '</span>';
+      else h += '<div class="opt' + on + '"><div class="sw ' + o[1] + '"></div><span>' + o[0] + '</span></div>';
+    });
+    if (v === '6') h = '<i>Матеріали</i>' + h;
+    box.innerHTML = h;
+  });
+})();
+</script>

@@ -238,7 +238,7 @@
     B.questions.filter(function (z) { return z.sec === sec.id && vis(z); }).forEach(function (z, i) { tot++; if (z.id === q.id) n = i + 1; });
     var h = '<p class="eyebrow">' + esc(sec.title) + ' · ' + n + '/' + tot + '</p><h1>' + words(q.title) + (q.req ? ' <span class="req">*</span>' : '') + '</h1>' + (q.hint ? '<p class="hint">' + q.hint + '</p>' : '');
     h += '<div class="ctl">' + control(q) + '</div><div class="err" id="err" role="alert"></div>';
-    return h;
+    return '<div class="qv"><p class="big" aria-hidden="true">' + esc(sec.title) + '</p>' + h + '</div>';
   }
 
   function control(q) {
