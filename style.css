@@ -287,3 +287,8 @@ h1{margin-bottom:26px}
   .qv{column-gap:clamp(24px,4vw,64px)}
   .qv>*:not(.big){grid-column:2}
 }
+
+/* цифры крупнее, квадраты/кружки ближе к ответам */
+.opt i{width:44px;font-size:20px;font-weight:500;color:rgba(45,42,42,.78);letter-spacing:0}
+.opt{gap:20px}
+@media(min-width:821px){.opts{max-width:540px}}
