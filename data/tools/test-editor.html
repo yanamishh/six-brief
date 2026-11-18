@@ -526,6 +526,39 @@ body .pvm .phone .opt{font-size:14px}
 
 body .pvm .top b,body .pvm .seg button,body .pvm .edit,body .pvm .xb{font:400 11px var(--disp);text-transform:uppercase;letter-spacing:.03em}
 body .pvm .seg{border-radius:30px}
+
+/* огромные жирные заголовки вопросов */
+body .phone h1{font:700 40px/.9 var(--disp);letter-spacing:-.03em;text-transform:uppercase;margin:0 0 18px}
+body .pvm .phone h1,body .pvm .frame.m .phone h1{font:700 clamp(46px,13vw,64px)/.88 var(--disp);letter-spacing:-.035em;margin:0 0 22px}
+body .pvm .frame.d .phone h1{font:700 clamp(64px,9.4vw,140px)/.86 var(--disp);letter-spacing:-.034em;margin:0 0 30px}
+body .pvm .frame.d{max-width:1240px}
+body .pvm .frame.d .phone{padding:44px 56px 36px}
+body .pvm .phone h1 i{font-weight:700}
+#editor h2{font:700 clamp(36px,5.2vw,84px)/.88 var(--disp);letter-spacing:-.035em;text-transform:uppercase;margin:0 0 34px;overflow-wrap:anywhere}
+
+/* заголовок растягивается на всю ширину карточки; ответы жирнее и крупнее */
+body .phone{zoom:1}
+body .phone .opt{font:700 15px/1.1 var(--disp);letter-spacing:0;padding:15px 34px 15px 0}
+body .phone .opt i{font:700 11px var(--disp)}
+body .phone .opt:after{width:20px;height:20px;margin-top:-10px;border-width:1.4px}
+body .phone .inp,body .phone .ta{font:700 18px var(--disp);color:rgba(45,42,42,.42)}
+body .pvm .phone .opt{font-size:17px;padding:18px 40px 18px 0}
+body .pvm .frame.d .phone .opt{font-size:24px;padding:20px 46px 20px 0}
+body .pvm .frame.d .phone .opt:after{width:26px;height:26px;margin-top:-13px}
+body .pvm .phone .inp,body .pvm .phone .ta{font-size:22px}
+body .pvm .frame.d .phone .inp,body .pvm .frame.d .phone .ta{font-size:34px}
+body .phone h1,body .pvm .phone h1,body .pvm .frame.d .phone h1,body .pvm .frame.m .phone h1{overflow-wrap:normal;word-break:normal;hyphens:none}
+
+/* размер заголовка вопроса: жирный, но читается как вопрос, а не как плакат */
+body .phone h1{font:700 28px/.96 var(--disp);letter-spacing:-.025em;text-transform:uppercase;margin:0 0 20px}
+body .pvm .phone h1,body .pvm .frame.m .phone h1{font:700 34px/.96 var(--disp);letter-spacing:-.028em;margin:0 0 24px}
+body .pvm .frame.d .phone h1{font:700 clamp(40px,4.6vw,64px)/.94 var(--disp);letter-spacing:-.03em;margin:0 0 32px;max-width:22ch}
+#editor h2{font:700 clamp(30px,3.2vw,48px)/.96 var(--disp);letter-spacing:-.03em;margin:0 0 28px}
+body .phone .opt{font-size:14px}
+body .pvm .phone .opt{font-size:16px}
+body .pvm .frame.d .phone .opt{font-size:20px;padding:18px 44px 18px 0}
+body .pvm .frame.d .phone .opt:after{width:22px;height:22px;margin-top:-11px}
+body .pvm .frame.d .phone .inp,body .pvm .frame.d .phone .ta{font-size:26px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
