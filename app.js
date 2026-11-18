@@ -239,7 +239,7 @@
     var h = '<p class="eyebrow">' + esc(sec.title) + ' · ' + n + '/' + tot + '</p><h1>' + words(q.title) + (q.req ? ' <span class="req">*</span>' : '') + '</h1>' + (q.hint ? '<p class="hint">' + q.hint + '</p>' : '');
     h += '<div class="ctl">' + control(q) + '</div><div class="err" id="err" role="alert"></div>';
     var secNo = String(B.sections.indexOf(sec) + 1).padStart(2, '0');
-    return '<div class="qv"><div class="big" aria-hidden="true"><div class="bn">' + secNo + '</div><p class="bt">' + esc(sec.title) + '</p></div>' + h + '</div>';
+    return '<div class="qv' + (q.type === 'cards' ? ' wide' : '') + '"><div class="big" aria-hidden="true"><div class="bn">' + secNo + '</div><p class="bt">' + esc(sec.title) + '</p></div>' + h + '</div>';
   }
 
   function control(q) {
@@ -252,7 +252,8 @@
       var os = optsOf(q);
       if (q.other) os.push({ v: OTHER, l: 'Інше', i: os.length });
       if (t === 'cards') {
-        h = '<div class="cards' + (q.swatch ? ' sw' : '') + '" data-multi="' + (multi ? 1 : 0) + '">';
+        var cn = os.length, cc = cn <= 4 ? cn : (cn <= 6 ? 3 : (cn <= 8 ? 4 : (cn <= 10 ? 5 : 6)));
+        h = '<div class="cards' + (q.swatch ? ' sw' : '') + '" data-multi="' + (multi ? 1 : 0) + '" style="--cols:' + cc + ';--rows:' + Math.ceil(cn / cc) + '">';
         os.forEach(function (o, i) {
           h += '<button type="button" class="card' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><div class="ph">' + (o.v === OTHER ? ICON : ICON + '<img src="' + esc(imgSrc(q, o)) + '" alt="" loading="lazy" onerror="this.remove()">') + '</div><div class="tx"><b>' + esc(o.l) + '</b>' + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</div><span class="ck">' + CHECK + '</span></button>';
         });
