@@ -141,7 +141,7 @@
   var stage = $('#stage'), nav = $('#nav'), bar = $('#bar');
   var curQ = null;
 
-  function go(key, back) {
+  function go(key, back) { if (locked) return;
     S.cur = key; persist(); render(back);
     window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
   }
@@ -438,6 +438,7 @@
   /* ---------- меню розділів ---------- */
   var dr = $('#drawer');
   function openMenu() {
+    if (locked) return;
     var x = idx(), h = '<h2>Розділи</h2>';
     h += '<button class="it' + (S.cur === 'welcome' ? ' cur' : '') + '" data-k="welcome"><span>Початок</span></button>';
     x.P.filter(function (p) { return p.k[0] === 's' && p.sec; }).forEach(function (p) {
