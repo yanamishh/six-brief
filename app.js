@@ -258,7 +258,7 @@
         });
         h += '</div>';
       } else {
-        h = '<div class="opts ' + (multi ? 'multi' : 'single') + '" data-multi="' + (multi ? 1 : 0) + '">';
+        h = '<div class="opts ' + (multi ? 'multi' : 'single') + (os.length > 6 ? ' many' : '') + '" data-multi="' + (multi ? 1 : 0) + '" style="--n:' + os.length + ';--r:' + Math.ceil(os.length / 2) + '">';
         os.forEach(function (o, i) {
           h += '<button type="button" class="opt' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><i>' + (i < 9 ? i + 1 : '') + '</i><span>' + esc(o.l) + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</span></button>';
         });
