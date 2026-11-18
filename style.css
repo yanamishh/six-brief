@@ -247,3 +247,23 @@ h1{font:700 clamp(24px,2.5vw,38px)/1.04 var(--disp);letter-spacing:.012em;word-s
 .qv .big .bn{font:700 clamp(84px,13vw,200px)/.8 var(--disp);letter-spacing:-.03em;margin:0 0 18px}
 .qv .big .bt{margin:0;font:700 clamp(24px,3vw,44px)/.98 var(--disp);letter-spacing:-.012em;word-spacing:.08em;text-transform:uppercase;max-width:14ch}
 @media(max-width:820px){.qv .big{display:none}.qv{min-height:0;align-content:start}}
+
+/* ---- одинаковое положение «02 ОБ'ЄКТ» на странице раздела и на вопросах; крупнее подписи; больше воздуха по бокам ---- */
+:root{--pad:clamp(20px,3vw,48px);--lt:calc(40svh + 10px)}
+@media(min-width:821px){
+  .sec>div:first-child{position:fixed;left:max(var(--pad),env(safe-area-inset-left,0px));top:var(--lt);width:calc(50vw - var(--pad)*1.5);z-index:1}
+  .sec>div:first-child .eyebrow{display:none}
+  .sec .no{font:700 clamp(84px,13vw,200px)/.8 var(--disp);letter-spacing:-.03em;margin:0 0 18px}
+  .sec h1{font:700 clamp(24px,3vw,44px)/.98 var(--disp);letter-spacing:-.012em;word-spacing:.08em;text-transform:uppercase;max-width:14ch;margin:0 0 18px}
+  .sec .hint{max-width:34ch}
+  .sec .pic{grid-column:2;grid-row:1}
+  .qv .big{top:var(--lt);bottom:auto}
+  .qv{min-height:calc(100svh - 176px);align-content:center}
+  .qv>*:not(.big){margin-right:clamp(0px,7vw,160px)}
+}
+.qv .eyebrow{font:400 15px/1.1 var(--disp);letter-spacing:.02em;margin:0 0 26px}
+.opt{padding:21px 46px 21px 0;gap:22px}
+.opt i{width:34px;font-size:15px;font-weight:500;color:var(--mut)}
+.opt:after{right:4px;width:20px;height:20px;margin-top:-10px}
+.rows .row{padding:18px 0}
+h1{margin-bottom:26px}
