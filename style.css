@@ -382,3 +382,18 @@ h1{margin-bottom:26px}
 .hero .btn.main{padding:22px 52px;font:700 clamp(15px,1.3vw,19px)/1 var(--disp);letter-spacing:.03em}
 .hero .consent{font-size:13px;margin-top:26px}
 .hero .resume{max-width:46ch}
+
+/* приветствие и страницы разделов: всё по центру экрана (и по ширине, и по высоте) */
+.hero,.sec{grid-template-columns:1fr;place-items:center;text-align:center;min-height:calc(100svh - 176px)}
+.sec>div:first-child,.hero>div:first-child{position:static;left:auto;top:auto;width:auto;max-width:880px;margin:0 auto;z-index:auto}
+.sec>div:first-child .eyebrow{display:none}
+.sec .no{font:700 clamp(110px,17vw,250px)/.8 var(--disp);letter-spacing:-.03em;margin:0 0 22px}
+.sec h1{font:700 clamp(32px,4.2vw,64px)/.96 var(--disp);letter-spacing:-.012em;max-width:none;margin:0 0 22px;text-align:center}
+.sec .hint,.hero .hint{margin-left:auto;margin-right:auto;text-align:center}
+.sec .hint{max-width:40ch}
+.hero h1{max-width:none;margin-left:auto;margin-right:auto;text-align:center}
+.hero .eyebrow{text-align:center}
+.meta{justify-content:center}
+.hero>div>div[style]{justify-content:center}
+.hero .consent,.hero .resume{margin-left:auto;margin-right:auto;text-align:center}
+.hero .link{justify-content:center}
