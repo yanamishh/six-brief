@@ -267,3 +267,23 @@ h1{font:700 clamp(24px,2.5vw,38px)/1.04 var(--disp);letter-spacing:.012em;word-s
 .opt:after{right:4px;width:20px;height:20px;margin-top:-10px}
 .rows .row{padding:18px 0}
 h1{margin-bottom:26px}
+
+/* ---- читаемость серых подписей, кнопка «додати», компактные линии, поля ~2 см от края ---- */
+:root{--edge:clamp(24px,4vw,76px)}
+.hint{font-size:17px;line-height:1.35;color:rgba(45,42,42,.68);max-width:52ch}
+.rep h3{font-size:15px;margin-bottom:10px}
+.rep label{font-size:14px;color:rgba(45,42,42,.68);margin-top:18px}
+.rep .inp{font-size:19px;padding:8px 0 12px}
+.rep .rm{font-size:14px}
+.add{display:inline-flex;width:auto;min-width:260px;padding:18px 34px;font-size:15px;letter-spacing:.02em;gap:12px}
+.scale-lbl{font-size:13px}
+.err{font-size:14px}
+.file{font-size:15px}
+.mx th{font-size:13px}.mx td{font-size:15px}
+@media(min-width:821px){
+  .stage{padding-left:max(var(--edge),env(safe-area-inset-left,0px));padding-right:max(var(--edge),env(safe-area-inset-right,0px))}
+  .sec>div:first-child,.qv .big{left:max(var(--edge),env(safe-area-inset-left,0px));width:calc(50vw - var(--edge)*1.5)}
+  .qv>*:not(.big){margin-right:0;max-width:720px;width:100%}
+  .qv{column-gap:clamp(24px,4vw,64px)}
+  .qv>*:not(.big){grid-column:2}
+}
