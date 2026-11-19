@@ -22,8 +22,8 @@ try:
 except Exception:
     have_pil = False
 assets = {}
-for f in glob.glob(sp + 'artifact-files/*/*.jpg'):
-    assets[os.path.basename(f)[:-4]] = f
+for f in glob.glob(sp + 'artifact-files/*/*.jpg') + glob.glob(sp + 'artifact-files/*/*.png'):
+    assets[os.path.splitext(os.path.basename(f))[0]] = f
 nimg = 0
 def txt(s):
     return (s or '').strip()

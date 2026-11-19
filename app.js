@@ -265,7 +265,7 @@
   function questionHtml(q, sec) {
     var x = idx(), n = 0, tot = 0;
     B.questions.filter(function (z) { return z.sec === sec.id && vis(z); }).forEach(function (z, i) { tot++; if (z.id === q.id) n = i + 1; });
-    var h = '<p class="eyebrow">' + esc(sec.title) + ' · ' + n + '/' + tot + '</p><h1>' + words(q.title) + (q.req ? ' <span class="req">*</span>' : '') + '</h1>' + (q.hint ? '<p class="hint">' + q.hint + '</p>' : '');
+    var h = '<p class="eyebrow">' + esc(sec.title) + ' · ' + n + '/' + tot + '</p><h1>' + words(q.title) + (q.req ? ' <span class="req">*</span>' : '') + '</h1>' + (q.hint ? '<p class="hint">' + q.hint + '</p>' : ((q.type === 'single' || q.type === 'cards') && q.multi ? '<p class="hint">Можна обрати декілька варіантів.</p>' : ''));
     h += '<div class="ctl">' + control(q) + '</div><div class="err" id="err" role="alert"></div>';
     var secNo = String(B.sections.indexOf(sec) + 1).padStart(2, '0');
     return '<div class="qv' + (q.type === 'cards' ? ' wide' : '') + '"><div class="big" aria-hidden="true"><div class="bn">' + secNo + '</div><p class="bt">' + esc(sec.title) + '</p></div>' + h + '</div>';
@@ -291,7 +291,7 @@
       } else {
         h = '<div class="opts ' + (multi ? 'multi' : 'single') + (os.length > 6 ? ' many' : '') + '" data-multi="' + (multi ? 1 : 0) + '" style="--n:' + os.length + ';--r:' + Math.ceil(os.length / 2) + '">';
         os.forEach(function (o, i) {
-          h += '<button type="button" class="opt' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><i>' + (i < 9 ? i + 1 : '') + '</i><span>' + esc(o.l) + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</span></button>';
+          h += '<button type="button" class="opt' + (sel.indexOf(o.v) > -1 ? ' on' : '') + '" data-v="' + esc(o.v) + '" style="--i:' + i + '"><i>' + (i + 1) + '</i><span>' + esc(o.l) + (o.d ? '<small>' + esc(o.d) + '</small>' : '') + '</span></button>';
         });
         h += '</div>';
       }
@@ -387,6 +387,8 @@
     document.addEventListener('click', function (e) { if (!w.contains(e.target)) w.classList.remove('open'); });
   }
 
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) { document.addEventListener(ev, function (e) { e.preventDefault(); }); });
+
   function bindQuestion(q) {
     var t = q.type;
     var f = $('#f');
@@ -444,7 +446,7 @@
       box.querySelectorAll('[data-v]').forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
       if (oth) oth.hidden = v !== OTHER;
       persist();
-      if (v !== OTHER) setTimeout(function () { if (stage.dataset.k === 'q:' + q.id) next(); }, 260);
+      if (v !== OTHER) setTimeout(function () { if (stage.dataset.k === 'q:' + q.id) next(); }, 800);
       else { var oi = $('#o'); if (oi) oi.focus(); }
     }
   }
