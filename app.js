@@ -144,9 +144,19 @@
     if (t === 'date' && v) { var d = new Date(v); return isNaN(d) ? v : d.toLocaleDateString('uk-UA'); }
     return String(v);
   }
+  /* вибрані картинки (для PDF студії): абсолютні посилання на фото обраних карток */
+  function picked(q) {
+    if (q.type !== 'cards') return undefined;
+    var v = S.a[q.id], sel = Array.isArray(v) ? v : [v], out = [];
+    optsOf(q).forEach(function (o) {
+      if (o.v === OTHER || sel.indexOf(o.v) < 0) return;
+      try { out.push({ l: o.l, u: new URL(imgSrc(q, o), location.href).href }); } catch (e) {}
+    });
+    return out.length ? out : undefined;
+  }
   function readable() {
     return B.sections.map(function (s) {
-      return { section: s.title, items: B.questions.filter(function (q) { return q.sec === s.id && vis(q) && nonEmpty(S.a[q.id]); }).map(function (q) { return { q: q.title, a: fmt(q, S.a[q.id]) }; }) };
+      return { section: s.title, items: B.questions.filter(function (q) { return q.sec === s.id && vis(q) && nonEmpty(S.a[q.id]); }).map(function (q) { return { q: q.title, a: fmt(q, S.a[q.id]), imgs: picked(q) }; }) };
     }).filter(function (s) { return s.items.length; });
   }
 
@@ -263,7 +273,8 @@
 
   function control(q) {
     var v = S.a[q.id], t = q.type, o, h = '';
-    if (t === 'text' || t === 'email' || t === 'tel' || t === 'number' || t === 'date')
+    if (t === 'date') return '<div class="dt"><input class="inp" id="f" type="text" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="ДД.ММ.РРРР" value="' + esc(dateShow(v === TRUST ? '' : v || '')) + '"><button class="dtb" type="button" aria-label="Календар"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></button><div class="cal"></div></div>';
+    if (t === 'text' || t === 'email' || t === 'tel' || t === 'number')
       return '<input class="inp" id="f" type="' + (t === 'text' ? 'text' : t) + '"' + (t === 'tel' ? ' inputmode="tel"' : '') + (t === 'number' ? ' inputmode="decimal"' : '') + ' autocomplete="' + (q.ac || 'off') + '" placeholder="' + esc(q.ph || '') + '" value="' + esc(v === TRUST ? '' : v || '') + '">';
     if (t === 'long') return '<textarea class="ta" id="f" placeholder="' + esc(q.ph || 'Напишіть своїми словами…') + '">' + esc(v === TRUST ? '' : v || '') + '</textarea>';
     if (t === 'single' || (t === 'cards')) {
@@ -337,12 +348,51 @@
   function fileRow(f, i) { return '<div class="file"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0">' + esc(f.name) + ' · завантажено</span><button type="button" data-i="' + i + '" aria-label="Видалити">✕</button></div>'; }
 
   /* ---------- події питань ---------- */
+
+  /* ---- поле даты: вписать (маска ДД.ММ.РРРР) или выбрать в календаре ---- */
+  var MN = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'], WD = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function dateShow(v) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); return m ? m[3] + '.' + m[2] + '.' + m[1] : (v || ''); }
+  function dateParse(v) { var m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(v || ''); if (!m) return null; var d = new Date(+m[3], +m[2] - 1, +m[1]); return d.getMonth() === +m[2] - 1 ? d : null; }
+  function dateFmt(d) { return p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear(); }
+  function dateMask(s) { var d = s.replace(/\D/g, '').slice(0, 8); return d.length > 4 ? d.slice(0, 2) + '.' + d.slice(2, 4) + '.' + d.slice(4) : d.length > 2 ? d.slice(0, 2) + '.' + d.slice(2) : d; }
+  function bindDate(f, q) {
+    var w = f.closest('.dt'), cal = $('.cal', w), btn = $('.dtb', w);
+    function save() { S.a[q.id] = f.value; persist(); }
+    function draw(y, m) {
+      var sel = dateParse(f.value), now = new Date(), off = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate(), h = '', i;
+      for (i = 0; i < 7; i++) h += '<i>' + WD[i] + '</i>';
+      for (i = 0; i < off; i++) h += '<span></span>';
+      for (i = 1; i <= days; i++) {
+        var c = '';
+        if (sel && sel.getFullYear() === y && sel.getMonth() === m && sel.getDate() === i) c += ' on';
+        if (now.getFullYear() === y && now.getMonth() === m && now.getDate() === i) c += ' td';
+        h += '<button type="button" class="' + c.trim() + '" data-d="' + i + '">' + i + '</button>';
+      }
+      cal.innerHTML = '<div class="ch"><button type="button" data-n="-1">&#8592;</button><b>' + MN[m] + ' ' + y + '</b><button type="button" data-n="1">&#8594;</button></div><div class="g">' + h + '</div>';
+      w.dataset.y = y; w.dataset.m = m;
+    }
+    f.addEventListener('input', function () { f.value = dateMask(f.value); save(); });
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var o = w.classList.toggle('open');
+      if (o) { var s = dateParse(f.value) || new Date(); draw(s.getFullYear(), s.getMonth()); }
+    });
+    cal.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var n = e.target.closest('[data-n]'), d = e.target.closest('[data-d]');
+      if (n) { var y = +w.dataset.y, m = +w.dataset.m + +n.dataset.n; if (m < 0) { m = 11; y--; } if (m > 11) { m = 0; y++; } draw(y, m); }
+      if (d) { f.value = dateFmt(new Date(+w.dataset.y, +w.dataset.m, +d.dataset.d)); w.classList.remove('open'); save(); }
+    });
+    document.addEventListener('click', function (e) { if (!w.contains(e.target)) w.classList.remove('open'); });
+  }
+
   function bindQuestion(q) {
     var t = q.type;
     var f = $('#f');
     if (f && (t === 'text' || t === 'email' || t === 'tel' || t === 'number' || t === 'date' || t === 'long')) {
       f.addEventListener('input', function () { S.a[q.id] = f.value; persist(); });
-      if (t === 'date') f.addEventListener('change', function () { S.a[q.id] = f.value; persist(); });
+      if (t === 'date') bindDate(f, q);
     }
     if (t === 'single' || t === 'cards') {
       var box = $(t === 'cards' ? '.cards' : '.opts'), multi = box.dataset.multi === '1';
