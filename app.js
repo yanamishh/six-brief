@@ -465,7 +465,7 @@
       box.querySelectorAll('[data-v]').forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
       if (oth) oth.hidden = v !== OTHER;
       persist();
-      if (v !== OTHER) setTimeout(function () { if (stage.dataset.k === 'q:' + q.id) next(); }, 800);
+      if (v !== OTHER) { clearTimeout(window.__adv); window.__adv = setTimeout(function () { if (stage.dataset.k === 'q:' + q.id) next(); }, 1600); }
       else { var oi = $('#o'); if (oi) oi.focus(); }
     }
   }
