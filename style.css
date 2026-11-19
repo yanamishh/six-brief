@@ -559,6 +559,4 @@ html{touch-action:pan-x pan-y}
 @media(max-width:820px){
   .top,.nav{background:var(--bg)!important}
   .save.busy:before{animation:none!important}
-  .card{contain:layout paint}
-  main{contain:layout}
 }
