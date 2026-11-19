@@ -500,9 +500,7 @@
     }).catch(function () { S.done = false; persist(); btn.disabled = false; btn.textContent = 'Надіслати бриф'; $('#err').textContent = 'Не вдалося надіслати. Відповіді збережені, спробуйте ще раз за хвилину.'; });
   }
   function doneHtml() {
-    var other = BK === 'concept'
-      ? '<p class="hint">Якщо хочете піти далі, заповніть ще й <b>технічний бриф</b>: оздоблення, інженерія, техніка. Його можна пройти пізніше, за тим самим посиланням.</p><a class="btn main" style="display:inline-block;text-decoration:none" href="?b=tech&c=' + client + '">Технічний бриф</a>'
-      : '<p class="hint">Дякуємо! Ми вивчимо відповіді й підготуємося до зустрічі.</p>';
+    var other = '<p class="hint">Дякуємо! Ми вивчимо відповіді й підготуємося до зустрічі.</p>';   // посилання на технічний бриф прибрано (19.11.2026), щоб повернути: див. data/app.v4.bak.js
     if (!CFG.endpoint) other = '<div class="resume"><b>Тестовий режим.</b> Пошту студії ще не підключено, тому відповіді збережено лише в цьому браузері й нікуди не надіслано.</div>' + other;
     return '<div class="done-mark"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><p class="eyebrow">Надіслано</p><h1>' + words('Дякуємо, відповіді вже у нас') + '</h1><p class="hint">Ми прочитаємо кожну відповідь і зв’яжемося з вами у зручний для вас спосіб.</p>' + other;
   }
