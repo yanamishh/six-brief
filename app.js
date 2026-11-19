@@ -113,7 +113,7 @@
   });
   function pullRemote() {
     if (!CFG.endpoint) return Promise.resolve(null);
-    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 4500);
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 9000);
     return fetch(CFG.endpoint + '?action=load&client=' + encodeURIComponent(client) + '&brief=' + BK, { signal: ctl.signal })
       .then(function (r) { return r.json(); })
       .then(function (r) {
