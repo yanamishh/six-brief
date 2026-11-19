@@ -49,7 +49,7 @@ for q in Q:
                 dst = d + str(i + 1) + '.jpg'
                 if have_pil:
                     im = Image.open(assets[op['img']]).convert('RGB')
-                    im.thumbnail((1600, 1600)); im.save(dst, 'JPEG', quality=82, optimize=True)
+                    im.thumbnail((1000, 1000)); im.save(dst, "JPEG", quality=78, optimize=True, progressive=True)
                 else:
                     shutil.copy(assets[op['img']], dst)
                 e['img'] = 'img/' + q['id'] + '/' + str(i + 1) + '.jpg'
