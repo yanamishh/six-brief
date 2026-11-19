@@ -465,8 +465,8 @@
       box.querySelectorAll('[data-v]').forEach(function (b) { b.classList.toggle('on', b.dataset.v === v); });
       if (oth) oth.hidden = v !== OTHER;
       persist();
-      if (v !== OTHER) { clearTimeout(window.__adv); window.__adv = setTimeout(function () { if (stage.dataset.k === 'q:' + q.id) next(); }, 1600); }
-      else { var oi = $('#o'); if (oi) oi.focus(); }
+      /* автопереход отключён по просьбе Яны (19.11.2026): дальше только кнопкой «Далі» */
+      if (v === OTHER) { var oi = $('#o'); if (oi) oi.focus(); }
     }
   }
   function bindFiles(q) {
