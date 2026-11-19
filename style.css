@@ -530,3 +530,9 @@ body{touch-action:manipulation}
   .cal{width:100%}
   .cal .g button{height:44px;font-size:16px}
 }
+
+/* БЕЗ ПРОКРУТКИ (компьютер): страница на весь экран, лишнее уменьшается через --fit (см. fitPage в app.js) */
+@media(min-width:821px){
+  html,body{height:100%;overflow:hidden}
+  .app{width:calc(100% / var(--fit,1));height:calc(100svh / var(--fit,1));min-height:0;overflow:hidden;transform:scale(var(--fit,1));transform-origin:0 0}
+}

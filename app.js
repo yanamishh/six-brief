@@ -168,6 +168,23 @@
   function words(t) { return esc(t).split(' ').map(function (w, i) { return '<span class="w" style="--i:' + i + '">' + w + '</span>'; }).join(' '); }
 
   var stage = $('#stage'), nav = $('#nav'), bar = $('#bar');
+
+  /* ---- без прокрутки на компьютере: если страница не помещается, она равномерно уменьшается ---- */
+  var fitRaf = 0;
+  function fitPage() {
+    var root = document.documentElement, app = $('.app');
+    root.style.setProperty('--fit', '1');
+    if (!app || !matchMedia('(min-width:821px)').matches) return;
+    var S0 = app.scrollHeight, H = window.innerHeight;
+    if (S0 > H + 1) root.style.setProperty('--fit', Math.max(0.55, Math.min(1, H / S0)).toFixed(4));
+  }
+  function fitSoon() { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(function () { fitRaf = requestAnimationFrame(fitPage); }); }
+  new MutationObserver(fitSoon).observe(stage, { childList: true, subtree: true });
+  window.addEventListener('resize', fitSoon);
+  document.addEventListener('input', fitSoon);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSoon);
+  window.addEventListener('load', fitSoon);
+
   var curQ = null;
 
   function go(key, back) { if (locked) return;
