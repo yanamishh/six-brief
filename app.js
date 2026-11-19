@@ -80,10 +80,19 @@
   /* ---------- збереження ---------- */
   var saveTimer = null, saveEl = $('#save');
   function status(t, cls) { saveEl.textContent = t; saveEl.className = 'save ' + (cls || ''); }
+  /* одна відправка за раз: нові зміни збираються і йдуть після попередньої (раніше десятки запитів стояли в черзі й «Надіслати» впиралося в таймаут) */
+  var saving = null, saveAgain = false;
+  function doSave() {
+    if (saving) { saveAgain = true; return saving; }
+    saving = remote('save').then(function (r) { status(r && r.ok ? 'Збережено' : 'Збережено на цьому пристрої', r && r.ok ? 'ok' : ''); }, function () { status('Збережено на цьому пристрої', ''); })
+      .then(function () { saving = null; if (saveAgain) { saveAgain = false; return doSave(); } });
+    return saving;
+  }
+  function flushSave() { clearTimeout(saveTimer); return saving ? saving.then(function () { return saving; }) : Promise.resolve(); }
   function persist() {
     S.t = Date.now();
     var ok = ls.set(KEY(), JSON.stringify({ a: S.a, cur: S.cur, t: S.t, done: S.done }));
-    if (CFG.endpoint) { status('Зберігаємо…', 'busy'); clearTimeout(saveTimer); saveTimer = setTimeout(function () { remote('save').then(function (r) { status(r && r.ok ? 'Збережено' : 'Збережено на цьому пристрої', r && r.ok ? 'ok' : ''); }, function () { status('Збережено на цьому пристрої', ''); }); }, 1400); }
+    if (CFG.endpoint) { status('Зберігаємо…', 'busy'); clearTimeout(saveTimer); saveTimer = setTimeout(doSave, 2500); }
     else status(ok ? 'Збережено в браузері' : 'Не вдалося зберегти', ok ? 'ok' : 'off');
   }
   function payload(action) {
@@ -512,7 +521,7 @@
     if (miss.length) { go('q:' + miss[0].id); setTimeout(function () { validate(miss[0]); }, 50); return; }
     var btn = $('#next'); btn.disabled = true; btn.textContent = 'Надсилаємо…';
     S.done = true; persist();
-    var p = CFG.endpoint ? remote('submit') : Promise.resolve({ ok: true, local: true });
+    var p = CFG.endpoint ? flushSave().then(function () { return remote('submit'); }) : Promise.resolve({ ok: true, local: true });
     p.then(function (r) {
       if (r && r.ok) { S.cur = 'done'; ls.set(KEY(), JSON.stringify({ a: S.a, cur: 'review', t: S.t, done: true })); render(); status(r.local ? 'Збережено в браузері' : 'Надіслано', 'ok'); }
       else throw new Error('fail');
