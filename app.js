@@ -172,9 +172,10 @@
   /* ---- без прокрутки на компьютере: если страница не помещается, она равномерно уменьшается ---- */
   var fitRaf = 0;
   function fitPage() {
+    if (!matchMedia('(min-width:821px)').matches) return;
     var root = document.documentElement, app = $('.app');
     root.style.setProperty('--fit', '1');
-    if (!app || !matchMedia('(min-width:821px)').matches) return;
+    if (!app) return;
     var S0 = app.scrollHeight, H = window.innerHeight;
     if (S0 > H + 1) root.style.setProperty('--fit', Math.max(0.55, Math.min(1, H / S0)).toFixed(4));
   }
